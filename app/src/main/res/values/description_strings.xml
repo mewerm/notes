@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="SOLID">
+          S: Single Responsibility Principle (Принцип единственной ответственности). - самый главный. Он говорит о том, что у каждого класса, должна быть одна сфера его деятельности - те для каждого класса должно быть не более 1 причины изменять его реализацию.
+          O: Open-Closed Principle (Принцип открытости-закрытости).
+          L: Liskov Substitution Principle (Принцип подстановки Барбары Лисков).
+          I: Interface Segregation Principle (Принцип разделения интерфейса).
+          D: Dependency Inversion Principle (Принцип инверсии зависимостей).</string>
+
+</resources>
