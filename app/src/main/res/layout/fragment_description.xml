@@ -1,21 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:clickable="true"
-android:orientation="vertical"
-tools:context=".NotesFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    tools:context=".NotesFragment">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
     <TextView
-    android:id="@+id/coat_of_arms_image_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+        android:id="@+id/fragment_description_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="#FFFFFF"
+        android:padding="16dp" />
 
-    </androidx.core.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/tv_result_data_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20dp"
+        android:background="#FFFFFF"
+        android:hint="@string/date_of_create_note"
+        android:padding="16dp"
+        android:textColor="#FF4D17"
+        android:textSize="15sp"
+        android:textStyle="italic" />
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="217dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:autofillHints="name"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+
 
 </LinearLayout>
