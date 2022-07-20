@@ -1,52 +1,43 @@
 package com.maximmesh.notes;
 
-import android.app.DatePickerDialog;
-import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Calendar;
 
+import java.util.Arrays;
 
 public class DescriptionFragment extends Fragment {
 
-   static final String ARG_INDEX = "index";
-
-
-
-
-
-
+   static final String SELECTED_NOTE = "note";
+   private Note note;
 
    public DescriptionFragment() {
       // Required empty public constructor
    }
 
-
-
    @Override
    public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-
-
 
    }
 
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
-      // Inflate the layout for this fragment
       return inflater.inflate(R.layout.fragment_description, container, false);
    }
 
@@ -55,30 +46,62 @@ public class DescriptionFragment extends Fragment {
       super.onViewCreated(view, savedInstanceState);
       Bundle arguments = getArguments();
 
+      MotionLabel motionLabel = view.findViewById(R.id.btnBack);
+      motionLabel.setOnClickListener(v -> {
+         requireActivity().getSupportFragmentManager().popBackStack();
+      });
 
-      if(arguments != null){
-         int index = arguments.getInt(ARG_INDEX);
+      if (arguments != null) {
 
-         TextView textView = view.findViewById(R.id.fragment_description_text_view);
-         TypedArray description = getResources().obtainTypedArray(R.array.description_notes);
-         textView.setText(description.getResourceId(index, 0));
-         description.recycle();
+         //int index = arguments.getInt(SELECTED_NOTE);
+         Note paramNote = (Note)arguments.getParcelable(SELECTED_NOTE);
+         note = Arrays.stream(Note.getNotes()).filter( n -> n.getId() == paramNote.getId()).findFirst().get();
+
+
+
+         TextView tvTitle = view.findViewById(R.id.tvTitle);
+         tvTitle.setText(note.getTitle());
+         tvTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2){
+               note.setTitle(tvTitle.getText().toString());
+               updateData();
+               //Note.getNotes()[index].setTitle(charSequence.toString());
+            }
+            @Override
+            public void afterTextChanged(Editable editable) { }
+         });
+
+         TextView tvDescription = view.findViewById(R.id.tvDescription);
+         tvDescription.setText(note.getDescription());
       }
+   }
 
-
-
+   @RequiresApi(api = Build.VERSION_CODES.N)
+   private void updateData(){
+      NotesFragment notesFragment = (NotesFragment) requireActivity().getSupportFragmentManager().getFragments().stream().filter( fragment -> fragment instanceof NotesFragment)
+      .findFirst().get();
+      notesFragment.initNotes();
 
    }
 
-
-   public static DescriptionFragment newInstance(int index){
+   public static DescriptionFragment newInstance(int index) {
       DescriptionFragment fragment = new DescriptionFragment();
       Bundle args = new Bundle();
-      args.putInt(ARG_INDEX, index);
+      args.putInt(SELECTED_NOTE, index);
       fragment.setArguments(args);
       return fragment;
-
-
    }
+
+   public static DescriptionFragment newInstance(Note note) {
+      DescriptionFragment fragment = new DescriptionFragment();
+      Bundle args = new Bundle();
+      args.putParcelable(SELECTED_NOTE, note);
+      fragment.setArguments(args);
+      return fragment;
+   }
+
 
 }

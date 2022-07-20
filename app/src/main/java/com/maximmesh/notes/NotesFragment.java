@@ -1,6 +1,8 @@
 package com.maximmesh.notes;
 
-import android.graphics.Typeface;
+import static com.maximmesh.notes.DescriptionFragment.SELECTED_NOTE;
+
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,14 +16,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-
 public class NotesFragment extends Fragment {
 
+   Note note;
+   View dataContainer;
 
    public NotesFragment() {
-      // Required empty public constructor
    }
 
+   @Override
+   public void onSaveInstanceState(@NonNull Bundle outState) {
+      outState.putParcelable(SELECTED_NOTE, note);
+      super.onSaveInstanceState(outState);
+   }
 
    @Override
    public void onCreate(Bundle savedInstanceState) {
@@ -32,60 +39,81 @@ public class NotesFragment extends Fragment {
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
-      // Inflate the layout for this fragment
-      View rootView = inflater.inflate(R.layout.fragment_notes, container, false);
+      return inflater.inflate(R.layout.fragment_notes, container, false);
 
-      TextView textView = rootView.findViewById(R.id.header);
-
-      textView.setTypeface(Typeface.DEFAULT_BOLD);
-
-
-      return rootView;
    }
 
    @Override
    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
       super.onViewCreated(view, savedInstanceState);
-      initNotesList(view);
-   }
 
+      if (savedInstanceState != null) {
+         note = (Note) savedInstanceState.getParcelable(SELECTED_NOTE);
+      }
 
-   private void initNotesList(View view) {
-      LinearLayout linearLayout = (LinearLayout) view;
-      String[] notes = getResources().getStringArray(R.array.notes); //загружаю список заметок
-      //динамически добавляю TextView (список элементов)
-      for (int i = 0; i < notes.length; i++) {
-         TextView textView = new TextView(getContext()); //в рамках каждой итерации создаю TextView
-         textView.setText(notes[i]);
-         textView.setTextSize(22);
-         linearLayout.addView(textView);
+      dataContainer = view.findViewById(R.id.data_container);
+      initNotes(dataContainer);
 
-         final int index = i;
-
-         textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               //TODO: Отобразить список с описанием заметки
-               showDescriptionNotes(index);
-            }
-         });
-
+      if (isLandscape()) {
+         showLandNoteDetails(note);
       }
 
    }
 
-
-   private void showDescriptionNotes(int index) {
-      DescriptionFragment descriptionFragment = DescriptionFragment.newInstance(index);
-       requireActivity()
-       .getSupportFragmentManager()
-       .beginTransaction()
-       .add(R.id.fragment_container,descriptionFragment)
-       .addToBackStack("") //добавляем очищение от DescriptionFragment
-       .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE) //плавный камбэк to NotesFragment
-       .commit();
-
-
+   private boolean isLandscape() {
+      return getResources().getConfiguration().orientation
+      == Configuration.ORIENTATION_LANDSCAPE;
    }
 
+   public void initNotes() {
+      initNotes(dataContainer);
+   }
+
+   private void initNotes(View view) {
+      LinearLayout layoutView = (LinearLayout) view;
+      layoutView.removeAllViews();
+      for (int i = 0; i < Note.getNotes().length; i++) {
+
+         TextView tv = new TextView(getContext());
+         tv.setText(Note.getNotes()[i].getTitle());
+         tv.setTextSize(25);
+         tv.computeScroll();
+         layoutView.addView(tv);
+
+         final int index = i;
+         tv.setOnClickListener(v -> {
+            showNoteDetails(Note.getNotes()[index]);
+         });
+      }
+   }
+
+   private void showNoteDetails(Note note) {
+      this.note = note;
+      if (isLandscape()) {
+         showLandNoteDetails(note);
+      } else {
+         showPortNoteDetails(note);
+      }
+   }
+
+   private void showPortNoteDetails(Note note) {
+      DescriptionFragment descriptionFragment = DescriptionFragment.newInstance(note);
+      FragmentManager fragmentManager =
+      requireActivity().getSupportFragmentManager();
+      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+      fragmentTransaction.add(R.id.notes_container, descriptionFragment); // замена  фрагмента
+      fragmentTransaction.addToBackStack("");
+      fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+      fragmentTransaction.commit();
+   }
+
+   private void showLandNoteDetails(Note note) {
+      DescriptionFragment descriptionFragment = DescriptionFragment.newInstance(note);
+      FragmentManager fragmentManager =
+      requireActivity().getSupportFragmentManager();
+      FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+      fragmentTransaction.replace(R.id.note_container, descriptionFragment); // замена  фрагмента
+      fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+      fragmentTransaction.commit();
+   }
 }
