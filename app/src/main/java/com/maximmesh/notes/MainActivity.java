@@ -42,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
       Toolbar toolbar = findViewById(R.id.tool_bar);
       setSupportActionBar(toolbar);
       if (!isLandScape) {
-         initDrawer(toolbar);
+         initDrawer();
       }
    }
 
-   private void initDrawer(Toolbar toolbar) {
+   private void initDrawer() {
       DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-      ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+      ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
       R.string.navigation_drawer_open, R.string.navigation_drawer_close);
       drawerLayout.addDrawerListener(actionBarDrawerToggle);
       actionBarDrawerToggle.syncState();
