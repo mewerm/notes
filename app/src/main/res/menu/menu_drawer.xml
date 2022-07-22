@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_drawe_exit"
+        android:icon="@drawable/ic_baseline_close_24"
+        android:title="@string/good_luck_mthrfck"
+         />
+
+    <item
+        android:id="@+id/action_drawer_about"
+        android:title="@string/donate_support"
+        android:icon="@drawable/ic_baseline_engineering_24"/>
+
+    <item
+        android:id="@+id/action_drawer_author"
+        android:title="@string/about_author"
+        android:icon="?android:attr/fingerprintAuthDrawable"/>
+
+
+
+
+</menu>
