@@ -20,4 +20,12 @@
     <string name="donate_support">Поддержать проект</string>
     <string name="buy_meal">Заказать еду</string>
     <string name="about_author">Об авторе</string>
+    <string name="author_say"><![CDATA[Намасте. Да, я пытался ковылять по этим чудным берегам Ганги что есть сил. По-этому прошу переключиться на вкладку <Поддержать проект> и щедро насыпать золотых на указанные реквезиты, дабы была возможность купить рис и продолжить этот нелегкий путь. Намаскар.]]></string>
+    <string name="get_money">Отправить деньги</string>
+    <string name="get_card_number">Введите номер банковской карты</string>
+    <string name="card_data">Введите срок действия карты</string>
+    <string name="card_cvv">Введите CVV</string>
+    <string name="get_sum_money">Введите желаемую сумму</string>
+    <string name="money_what_you_want">Введите сумму в рублях</string>
+    <string name="done">Готово</string>
 </resources>

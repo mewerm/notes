@@ -56,6 +56,7 @@ public class Note implements Parcelable {
       id = ++counter;
    }
 
+
    static {
       notes = new ArrayList<>();
       for (int i = 0; i < 30; i++) {

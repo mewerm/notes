@@ -1,5 +1,7 @@
 package com.maximmesh.notes;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -73,16 +76,28 @@ public class DescriptionFragment extends Fragment {
    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
       if (item.getItemId() == R.id.action_delete) {
-         //TODO: Удаление заметки.
-         Note.getNotes().remove(note);
-         updateData();
-         if (!isLandScape()) {
-            requireActivity()
-            .getSupportFragmentManager()
-            .popBackStack();
-            return true;
-         }
 
+         new AlertDialog.Builder(getContext())
+         .setTitle("Внимание")
+         .setMessage("Вы действительно желаете удалить заметку?")
+         .setNegativeButton("Нет", null)
+         .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+               //TODO: Удаление заметки.
+               Note.getNotes().remove(note);
+               updateData();
+               if (!isLandScape())
+                  requireActivity()
+                  .getSupportFragmentManager()
+                  .popBackStack();
+               Toast.makeText(getActivity(), "Заметка удалена", Toast.LENGTH_SHORT).show();
+            }
+         })
+         .show();
+
+
+         return true;
       }
       return super.onOptionsItemSelected(item);
    }
@@ -150,13 +165,10 @@ public class DescriptionFragment extends Fragment {
    }
 
 
-
    private void updateData() {
       NotesFragment notesFragment = (NotesFragment) requireActivity().getSupportFragmentManager().getFragments().stream().filter(fragment -> fragment instanceof NotesFragment)
       .findFirst().get();
       notesFragment.initNotes();
 
    }
-
-
 }
