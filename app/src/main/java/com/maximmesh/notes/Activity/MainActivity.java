@@ -1,4 +1,4 @@
-package com.maximmesh.notes;
+package com.maximmesh.notes.Activity;
 
 
 import android.annotation.SuppressLint;
@@ -17,6 +17,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.maximmesh.notes.Fragments.Notification.AboutAuthorFragment;
+import com.maximmesh.notes.Fragments.Notification.AboutFragment;
+import com.maximmesh.notes.Fragments.NotesFragment;
+import com.maximmesh.notes.Fragments.Notification.NotificationFragment;
+import com.maximmesh.notes.R;
 
 public class MainActivity extends AppCompatActivity {
 

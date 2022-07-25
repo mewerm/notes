@@ -9,7 +9,7 @@
     android:background="@color/white"
     android:id="@+id/about_container"
     android:backgroundTint="@color/white"
-    tools:context=".AboutFragment">
+    tools:context=".Fragments.Notification.AboutFragment">
 
 
     <ImageView

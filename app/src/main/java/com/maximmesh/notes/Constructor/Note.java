@@ -1,4 +1,4 @@
-package com.maximmesh.notes;
+package com.maximmesh.notes.Constructor;
 
 import android.annotation.SuppressLint;
 import android.os.Parcel;
@@ -26,14 +26,6 @@ public class Note implements Parcelable {
 
    public void setTitle(String title) {
       this.title = title;
-   }
-
-   public void setDescription(String description) {
-      this.description = description;
-   }
-
-   public void setCreationDate(LocalDateTime creationDate) {
-      this.creationDate = creationDate;
    }
 
    public static ArrayList<Note> getNotes(){

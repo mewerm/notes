@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:clickable="false"
     android:orientation="vertical"
-    tools:context=".NotificationFragment">
+    tools:context=".Fragments.Notification.NotificationFragment">
 
 
     <EditText

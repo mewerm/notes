@@ -1,4 +1,4 @@
-package com.maximmesh.notes;
+package com.maximmesh.notes.Fragments.Notification;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.maximmesh.notes.R;
 
 public class NotificationFragment extends Fragment {
 

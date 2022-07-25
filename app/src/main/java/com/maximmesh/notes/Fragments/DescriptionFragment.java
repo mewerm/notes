@@ -1,4 +1,4 @@
-package com.maximmesh.notes;
+package com.maximmesh.notes.Fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -19,6 +19,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
+
+import com.maximmesh.notes.Constructor.Note;
+import com.maximmesh.notes.R;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
-package com.maximmesh.notes;
+package com.maximmesh.notes.Fragments;
 
-import static com.maximmesh.notes.DescriptionFragment.SELECTED_NOTE;
+import static com.maximmesh.notes.Fragments.DescriptionFragment.SELECTED_NOTE;
 
 import android.app.Activity;
 import android.content.res.Configuration;
@@ -22,6 +22,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.maximmesh.notes.Constructor.Note;
+import com.maximmesh.notes.R;
 
 
 public class NotesFragment extends Fragment {

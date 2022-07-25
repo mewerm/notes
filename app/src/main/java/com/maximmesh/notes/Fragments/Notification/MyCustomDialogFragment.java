@@ -1,4 +1,4 @@
-package com.maximmesh.notes;
+package com.maximmesh.notes.Fragments.Notification;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.maximmesh.notes.R;
 
 public class MyCustomDialogFragment extends DialogFragment {
 

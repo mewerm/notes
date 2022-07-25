@@ -1,4 +1,4 @@
-package com.maximmesh.notes;
+package com.maximmesh.notes.Fragments.Notification;
 
 import android.os.Bundle;
 
@@ -11,9 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.maximmesh.notes.R;
 
-public class AboutFragment extends Fragment {
-
+public class AboutAuthorFragment extends Fragment {
 
    @Override
    public void onCreate(Bundle savedInstanceState) {
@@ -24,12 +24,12 @@ public class AboutFragment extends Fragment {
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
-      return inflater.inflate(R.layout.fragment_about, container, false);
+      return inflater.inflate(R.layout.fragment_about_author, container, false);
    }
 
    @Override
    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-         super.onViewCreated(view, savedInstanceState);
+      super.onViewCreated(view, savedInstanceState);
 
       Button buttonOk = view.findViewById(R.id.bottom_ok);
       buttonOk.setOnClickListener(new View.OnClickListener() {
