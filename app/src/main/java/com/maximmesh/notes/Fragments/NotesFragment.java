@@ -88,7 +88,10 @@ public class NotesFragment extends Fragment {
       == Configuration.ORIENTATION_LANDSCAPE;
    }
 
-   public void initNotes() {
+   public void initNotes(boolean isDelete) {
+      if(isDelete){
+
+      }
       initNotes(dataContainer);
    }
 

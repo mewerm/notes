@@ -34,13 +34,6 @@ public class DescriptionFragment extends Fragment {
       // Required empty public constructor
    }
 
-   public static DescriptionFragment newInstance(int index) {
-      DescriptionFragment fragment = new DescriptionFragment();
-      Bundle args = new Bundle();
-      args.putInt(SELECTED_NOTE, index);
-      fragment.setArguments(args);
-      return fragment;
-   }
 
    public static DescriptionFragment newInstance(Note note) {
       DescriptionFragment fragment = new DescriptionFragment();
@@ -50,13 +43,6 @@ public class DescriptionFragment extends Fragment {
       return fragment;
    }
 
-   @Override
-   public void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-
-      setHasOptionsMenu(true);
-
-   }
 
    @Override
    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -65,11 +51,11 @@ public class DescriptionFragment extends Fragment {
       inflater.inflate(R.menu.description_menu, menu);
 
 
-      MenuItem itemAbout = menu.findItem(R.id.action_about); //убираем кнопку выйти из приложения из меню когда в фрагменте описания заметки находимся
       MenuItem itemExit = menu.findItem(R.id.action_exit); //убираем кнопку выйти из приложения из меню когда в фрагменте описания заметки находимся
       if (itemExit != null) {
          itemExit.setVisible(false);
       }
+      MenuItem itemAbout = menu.findItem(R.id.action_about); //убираем кнопку выйти из приложения из меню когда в фрагменте описания заметки находимся
       if (itemAbout != null) {
          itemAbout.setVisible(false);
       }
@@ -89,7 +75,8 @@ public class DescriptionFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                //TODO: Удаление заметки.
                Note.getNotes().remove(note);
-               updateData();
+               note = null;
+               updateData(true);
                if (!isLandScape())
                   requireActivity()
                   .getSupportFragmentManager()
@@ -98,7 +85,6 @@ public class DescriptionFragment extends Fragment {
             }
          })
          .show();
-
 
          return true;
       }
@@ -113,9 +99,12 @@ public class DescriptionFragment extends Fragment {
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
-      if (savedInstanceState == null) {
+      if(savedInstanceState == null) {
          setHasOptionsMenu(true);
       }
+
+      if (savedInstanceState != null)
+         requireActivity().getSupportFragmentManager().popBackStack();
       return inflater.inflate(R.layout.fragment_description, container, false);
    }
 
@@ -153,7 +142,7 @@ public class DescriptionFragment extends Fragment {
          @Override
          public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             note.setTitle(tvTitle.getText().toString());
-            updateData();
+            updateData(false);
 
          }
 
@@ -168,10 +157,10 @@ public class DescriptionFragment extends Fragment {
    }
 
 
-   private void updateData() {
+   private void updateData(boolean isDelete) {
       NotesFragment notesFragment = (NotesFragment) requireActivity().getSupportFragmentManager().getFragments().stream().filter(fragment -> fragment instanceof NotesFragment)
       .findFirst().get();
-      notesFragment.initNotes();
+      notesFragment.initNotes(isDelete);
 
    }
 }

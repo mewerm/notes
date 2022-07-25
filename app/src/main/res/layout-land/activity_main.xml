@@ -19,11 +19,15 @@
             app:titleTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
 
         <FrameLayout
@@ -39,5 +43,7 @@
             android:layout_weight="1.5" />
 
     </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>
