@@ -68,13 +68,11 @@ public class NotesFragment extends Fragment {
 
       dataContainer = view.findViewById(R.id.data_container);
       initNotes(dataContainer);
-
       FloatingActionButton actionButton = view.findViewById(R.id.btnAdd);
       actionButton.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
             Toast.makeText(getActivity(), "Добавляем новую заметку", Toast.LENGTH_LONG).show();
-
          }
       });
 

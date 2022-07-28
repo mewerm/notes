@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:clickable="false"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
     tools:context=".Fragments.Notification.NotificationFragment">
 
@@ -39,6 +40,7 @@
         android:layout_margin="5dp"
         android:layout_marginTop="30dp"
         android:text="@string/get_sum_money" />
+
     <Button
         android:id="@+id/button_snack_bar"
         android:layout_width="match_parent"
