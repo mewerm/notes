@@ -45,6 +45,8 @@ public class NotesFragment extends Fragment {
       super.onSaveInstanceState(outState);
    }
 
+
+
    @Override
    public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -68,17 +70,13 @@ public class NotesFragment extends Fragment {
 
       dataContainer = view.findViewById(R.id.data_container);
       initNotes(dataContainer);
-      FloatingActionButton actionButton = view.findViewById(R.id.btnAdd);
-      actionButton.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-            Toast.makeText(getActivity(), "Добавляем новую заметку", Toast.LENGTH_LONG).show();
-         }
-      });
+
+      addNote(view, Note.getNoteNumbers());
 
       if (isLandscape()) {
          showLandNoteDetails(note);
       }
+
    }
 
    private boolean isLandscape() {
@@ -86,8 +84,23 @@ public class NotesFragment extends Fragment {
       == Configuration.ORIENTATION_LANDSCAPE;
    }
 
+   /**
+    * Не понимаю как добавить новый элемент
+    * @param
+    */
+   public void addNote(View view, int index) {
+      FloatingActionButton actionButton = view.findViewById(R.id.btn_add);
+      actionButton.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+
+            Toast.makeText(getActivity(), "Добавляем новую заметку", Toast.LENGTH_LONG).show();
+         }
+      });
+   }
+
    public void initNotes(boolean isDelete) {
-      if(isDelete){
+      if (isDelete) {
 
       }
       initNotes(dataContainer);

@@ -6,8 +6,11 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +28,9 @@ import com.maximmesh.notes.R;
 
 public class MainActivity extends AppCompatActivity {
 
+   Toast backToast;
+   int doubleBackToExitPressed = 1;
+
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -40,6 +46,30 @@ public class MainActivity extends AppCompatActivity {
          .add(R.id.notes_container, notesFragment) //удаляем предыдущий фрагмент, добавляем новый. если add, то поверх старого добавляем новый
          .commit();
       }
+   }
+
+   /**
+    *Выход из приложения по системной кнопке с двойным нажатием
+    */
+   @Override
+   public void onBackPressed() {
+      if (doubleBackToExitPressed == 2) {
+         backToast.cancel();
+         finishAffinity();
+         System.exit(0);
+      }
+      else {
+         doubleBackToExitPressed++;
+         backToast = Toast.makeText(this, "Нажмите еще раз для выхода", Toast.LENGTH_SHORT);
+         backToast.show();
+      }
+
+      new Handler().postDelayed(new Runnable() {
+         @Override
+         public void run() {
+            doubleBackToExitPressed=1;
+         }
+      }, 2000);
    }
 
    private boolean isLandScape() {
