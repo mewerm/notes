@@ -8,5 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="theme_all_orange">#FF5722</color>
-    <color name="custom_action_bar_color">#FF7A52</color>
+    <color name="orange">#FF7A52</color>
 </resources>
