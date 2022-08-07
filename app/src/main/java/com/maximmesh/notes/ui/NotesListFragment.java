@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.maximmesh.notes.R;
 import com.maximmesh.notes.di.Dependencies;
 import com.maximmesh.notes.domain.CallBack;
@@ -41,6 +43,21 @@ public class NotesListFragment extends Fragment {
    @Override
    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
       super.onViewCreated(view, savedInstanceState);
+/*
+      //дата пикер
+      MaterialDatePicker<Long> datePicker =
+      MaterialDatePicker.Builder.datePicker()
+      .setTitleText("Выберите дату")
+      .build();
+
+      datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
+         @Override
+         public void onPositiveButtonClick(Object selection) {
+
+         }
+      });
+
+      datePicker.show(getParentFragmentManager(), "MaterialDatePicker");*/
 
       RecyclerView notesList = view.findViewById(R.id.notes_list); //находим RecycleView
 
@@ -103,7 +120,6 @@ public class NotesListFragment extends Fragment {
             .show(getParentFragmentManager(), "AddNoteBottomSheetDialogFragment");
          }
       });
-
 
       progressBar = view.findViewById(R.id.progress); //прогресс бар
       progressBar.setVisibility(View.VISIBLE); //в xml скрыли, тут показали
