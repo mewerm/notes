@@ -18,8 +18,22 @@ import com.maximmesh.notes.domain.Note;
 
 public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment {
 
-   public static final String KEY_RESULT = "AddNoteBottomSheetDialogFragment_KEY_RESULT";
+   public static final String ADD_KEY_RESULT = "AddNoteBottomSheetDialogFragment_ADD_KEY_RESULT";
+   public static final String UPDATE_KEY_RESULT = "AddNoteBottomSheetDialogFragment_UPDATE_KEY_RESULT";
    public static final String ARG_NOTE = "ARG_NOTE";
+
+   public static AddNoteBottomSheetDialogFragment addInstance() {
+      return new AddNoteBottomSheetDialogFragment();
+   }
+
+   public static AddNoteBottomSheetDialogFragment editInstance(Note note) {
+
+      Bundle args = new Bundle();
+      args.putParcelable(ARG_NOTE, note);
+      AddNoteBottomSheetDialogFragment fragment = new AddNoteBottomSheetDialogFragment();
+      fragment.setArguments(args);
+      return fragment;
+   }
 
    @Nullable
    @Override
@@ -31,36 +45,67 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
       super.onViewCreated(view, savedInstanceState);
 
+      Note noteToEdit = null;
+
+      if (getArguments() != null && getArguments().containsKey(ARG_NOTE)) {
+         noteToEdit = getArguments().getParcelable(ARG_NOTE);
+
+      }
+
       EditText title = view.findViewById(R.id.title);
       EditText message = view.findViewById(R.id.massage);
 
+      if (noteToEdit != null) {
+         title.setText(noteToEdit.getTitle());
+         message.setText(noteToEdit.getMessage());
+      }
+
       Button btnSave = view.findViewById(R.id.save);
 
+      Note finalNoteToEdit = noteToEdit;
+      Note finalNoteToEdit1 = noteToEdit;
       btnSave.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
 
             btnSave.setEnabled(false); //чтобы не мог 10 раз нажимать на кнопку сохранить)
 
-            Dependencies.NOTES_REPOSITORY.addNote(title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
-               @Override
-               public void onSuccess(Note data) {
+            if (finalNoteToEdit != null) {
+               Dependencies.NOTES_REPOSITORY.updateNote(finalNoteToEdit1, title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
+                  @Override
+                  public void onSuccess(Note data) {
+                     Bundle bundle = new Bundle();
+                     bundle.putParcelable(ARG_NOTE, data);
+                     getParentFragmentManager().setFragmentResult(UPDATE_KEY_RESULT, bundle);
 
-                  Bundle bundle = new Bundle();
-                  bundle.putParcelable(ARG_NOTE, data);
+                  }
 
-                  getParentFragmentManager().setFragmentResult(KEY_RESULT, bundle);
+                  @Override
+                  public void onError(Throwable exception) {
+                     btnSave.setEnabled(true);
+                  }
+               });
+            } else {
+               Dependencies.NOTES_REPOSITORY.addNote(title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
+                  @Override
+                  public void onSuccess(Note data) {
 
-                  btnSave.setEnabled(true); //разрешаем тапать по кнопке сохранить
-                  dismiss(); //закрываем шторку
-               }
+                     Bundle bundle = new Bundle();
+                     bundle.putParcelable(ARG_NOTE, data);
 
-               @Override
-               public void onError(Throwable exception) {
-                  btnSave.setEnabled(false); //запрещаем
-               }
-            });
+                     getParentFragmentManager().setFragmentResult(ADD_KEY_RESULT, bundle);
 
+                     btnSave.setEnabled(true); //разрешаем тапать по кнопке сохранить
+                     dismiss(); //закрываем шторку
+                  }
+
+                  @Override
+                  public void onError(Throwable exception) {
+                     btnSave.setEnabled(false); //запрещаем
+                  }
+               });
+
+            }
          }
       });
    }

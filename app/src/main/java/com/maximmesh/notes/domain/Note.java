@@ -23,6 +23,24 @@ public class Note implements Parcelable {
       this.cratedAt = cratedAt;
    }
 
+   protected Note(Parcel in) {
+      id = in.readString();
+      title = in.readString();
+      message = in.readString();
+   }
+
+   public static final Creator<Note> CREATOR = new Creator<Note>() {
+      @Override
+      public Note createFromParcel(Parcel in) {
+         return new Note(in);
+      }
+
+      @Override
+      public Note[] newArray(int size) {
+         return new Note[size];
+      }
+   };
+
    public String getId() {
       return id;
    }
@@ -59,6 +77,8 @@ public class Note implements Parcelable {
 
    @Override
    public void writeToParcel(Parcel dest, int flags) {
-
+      dest.writeString(id);
+      dest.writeString(title);
+      dest.writeString(message);
    }
 }
