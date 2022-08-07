@@ -18,14 +18,14 @@ public class InMemoryNotesRepository implements NotesRepository {
 
    private Handler handler = new Handler(Looper.getMainLooper()); //Handler - средство по доставке сообщений какому-либо потоку
 
-   public InMemoryNotesRepository(){
-      data.add(new Note(UUID.randomUUID().toString(), "Заметка 1", "Описаие заметки 1", new Date()));
-      data.add(new Note(UUID.randomUUID().toString(), "Заметка 2", "Описаие заметки 2", new Date()));
+   public InMemoryNotesRepository() {
+    data.add(new Note(UUID.randomUUID().toString(), "Здесь будут заголовки твоих заметок", "Здесь описание. Нажми плюсик внизу экрана =)", new Date()));
+ /*       data.add(new Note(UUID.randomUUID().toString(), "Заметка 2", "Описаие заметки 2", new Date()));
       data.add(new Note(UUID.randomUUID().toString(), "Заметка 3", "Описаие заметки 3", new Date()));
       data.add(new Note(UUID.randomUUID().toString(), "Заметка 4", "Описаие заметки 4", new Date()));
       data.add(new Note(UUID.randomUUID().toString(), "Заметка 5", "Описаие заметки 5", new Date()));
       data.add(new Note(UUID.randomUUID().toString(), "Заметка 6", "Описаие заметки 6", new Date()));
-      data.add(new Note(UUID.randomUUID().toString(), "Заметка 7", "Описаие заметки 7", new Date()));
+      data.add(new Note(UUID.randomUUID().toString(), "Заметка 7", "Описаие заметки 7", new Date()));*/
 
    }
 
@@ -47,6 +47,31 @@ public class InMemoryNotesRepository implements NotesRepository {
                }
             });
 
+         }
+      });
+   }
+
+   @Override
+   public void addNote(String title, String message, CallBack<Note> callback) {
+      executor.execute(new Runnable() {
+         @Override
+         public void run() {
+            try {
+               Thread.sleep(1000L);
+            } catch (InterruptedException e) {
+               e.printStackTrace();
+            }
+
+            Note note = new Note(UUID.randomUUID().toString(), title, message, new Date());
+
+            data.add(note);
+
+            handler.post(new Runnable() { //благодаря Handler выполним callback в основном потоке
+               @Override
+               public void run() {
+                  callback.onSuccess(note);
+               }
+            });
          }
       });
    }

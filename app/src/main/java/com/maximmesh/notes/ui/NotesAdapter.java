@@ -39,6 +39,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
       this.noteClicked = noteClicked;
    }
 
+   public int addNote(Note note) {
+      data.add(note);
+
+      return data.size() -1;
+   }
+
    interface OnNoteClicked{
       void onNoteClicked(Note note);
    }

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -50,6 +51,27 @@ public class NotesListFragment extends Fragment {
       });
 
       notesList.setAdapter(adapter);
+
+      getParentFragmentManager()
+      .setFragmentResultListener(AddNoteBottomSheetDialogFragment.KEY_RESULT, getViewLifecycleOwner(), new FragmentResultListener() {
+         @Override
+         public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+            Note note = result.getParcelable(AddNoteBottomSheetDialogFragment.ARG_NOTE);
+
+            int index = adapter.addNote(note);
+            adapter.notifyItemInserted(index); //обнови вставку элемента по такой-то позиции(лучше чем нотифайДатаСетЧей - оно меняет весь видимый список)
+
+          //если список длинный и необходимо доскролиться вниз:
+            notesList.smoothScrollToPosition(index);
+         }
+      });
+      view.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            new AddNoteBottomSheetDialogFragment()
+            .show(getParentFragmentManager(), "AddNoteBottomSheetDialogFragment");
+         }
+      });
 
 
       ProgressBar progressBar = view.findViewById(R.id.progress); //прогресс бар

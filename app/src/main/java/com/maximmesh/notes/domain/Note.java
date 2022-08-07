@@ -1,8 +1,11 @@
 package com.maximmesh.notes.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class Note {
+public class Note implements Parcelable {
 
    private String id;
 
@@ -33,5 +36,15 @@ public class Note {
 
    public Date getCrateAt() {
       return cratedAt;
+   }
+
+   @Override
+   public int describeContents() {
+      return 0;
+   }
+
+   @Override
+   public void writeToParcel(Parcel dest, int flags) {
+
    }
 }
