@@ -75,4 +75,27 @@ public class InMemoryNotesRepository implements NotesRepository {
          }
       });
    }
+
+   @Override
+   public void removeNote(Note note, CallBack<Void> callback) {
+      executor.execute(new Runnable() {
+         @Override
+         public void run() {
+            try {
+               Thread.sleep(1000L);
+            } catch (InterruptedException e) {
+               e.printStackTrace();
+            }
+
+            data.remove(note);
+
+            handler.post(new Runnable() { //благодаря Handler выполним callback в основном потоке
+               @Override
+               public void run() {
+                  callback.onSuccess(null);
+               }
+            });
+         }
+      });
+   }
 }

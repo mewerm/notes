@@ -1,6 +1,9 @@
 package com.maximmesh.notes.ui;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,6 +27,11 @@ import java.util.Objects;
 
 public class NotesListFragment extends Fragment {
 
+   ProgressBar progressBar;
+   private Note selectedNote;
+   private int selectedPosition;
+   private NotesAdapter adapter;
+
 
    public NotesListFragment() {
       super(R.layout.fragment_notes_list);
@@ -40,13 +48,18 @@ public class NotesListFragment extends Fragment {
       //делаем разделитель Divader
       DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
       dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(requireContext(), R.drawable.ic_divider)));
-
+      adapter = new NotesAdapter(this);
       notesList.addItemDecoration(dividerItemDecoration);
-      NotesAdapter adapter = new NotesAdapter();
       adapter.setNoteClicked(new NotesAdapter.OnNoteClicked() {
          @Override
          public void onNoteClicked(Note note) {
             Toast.makeText(requireContext(), note.getTitle(), Toast.LENGTH_SHORT).show();
+         }
+
+         @Override
+         public void onNoteLongClicked(Note note, int position) {
+            selectedNote = note;
+            selectedPosition = position;
          }
       });
 
@@ -61,10 +74,11 @@ public class NotesListFragment extends Fragment {
             int index = adapter.addNote(note);
             adapter.notifyItemInserted(index); //обнови вставку элемента по такой-то позиции(лучше чем нотифайДатаСетЧей - оно меняет весь видимый список)
 
-          //если список длинный и необходимо доскролиться вниз:
+            //если список длинный и необходимо доскролиться вниз:
             notesList.smoothScrollToPosition(index);
          }
       });
+
       view.findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
@@ -74,7 +88,7 @@ public class NotesListFragment extends Fragment {
       });
 
 
-      ProgressBar progressBar = view.findViewById(R.id.progress); //прогресс бар
+      progressBar = view.findViewById(R.id.progress); //прогресс бар
       progressBar.setVisibility(View.VISIBLE); //в xml скрыли, тут показали
 
       //так делает асинхронный метод неблоирующий на запрос заметок
@@ -93,5 +107,45 @@ public class NotesListFragment extends Fragment {
          }
       }); //NOTES_REPOSITORY - репозиторий с методом getAll() который возвращает список заметок,
       //забирает их их из InMemoryNotesRepository
+   }
+
+   @Override
+   public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+      super.onCreateContextMenu(menu, v, menuInfo);
+
+      MenuInflater menuInflater = getActivity().getMenuInflater();
+      menuInflater.inflate(R.menu.menu_notes_contex, menu);
+   }
+
+   @Override
+   public boolean onContextItemSelected(@NonNull MenuItem item) {
+      switch (item.getItemId()) {
+         case R.id.action_delete: //если произошло нажатие по Удлаить
+
+            progressBar.setVisibility(View.VISIBLE);
+
+            Dependencies.NOTES_REPOSITORY.removeNote(selectedNote, new CallBack<Void>() {
+               @Override
+               public void onSuccess(Void data) {
+                  progressBar.setVisibility(View.GONE);
+
+                  adapter.removeNote(selectedNote);
+
+                  adapter.notifyItemRemoved(selectedPosition);
+               }
+
+               @Override
+               public void onError(Throwable exception) {
+
+               }
+            });
+
+            Toast.makeText(requireContext(), "Заметка удалена", Toast.LENGTH_SHORT).show();
+            return true; //обрабатываем нажатие
+         case R.id.action_edit:
+            Toast.makeText(requireContext(), "Edit", Toast.LENGTH_SHORT).show();
+            return true;
+      }
+      return super.onContextItemSelected(item);
    }
 }

@@ -12,4 +12,6 @@
     <string name="message">Заметка</string>
     <string name="title">Заголовок</string>
     <string name="save">Сохранить</string>
+    <string name="action_edit">Редактировать</string>
+    <string name="action_delete">Удалить</string>
 </resources>
