@@ -2,6 +2,7 @@ package com.maximmesh.notes.ui;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.maximmesh.notes.R;
 import com.maximmesh.notes.di.Dependencies;
+import com.maximmesh.notes.domain.CallBack;
 import com.maximmesh.notes.domain.Note;
 
 import java.util.List;
@@ -32,10 +34,10 @@ public class NotesListFragment extends Fragment {
 
       RecyclerView notesList = view.findViewById(R.id.notes_list); //находим RecycleView
 
-      notesList.setLayoutManager(new LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL, false)); //тут обозначем как будем отображать
+      notesList.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)); //тут обозначем как будем отображать
 
       //делаем разделитель Divader
-      DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(),LinearLayoutManager.VERTICAL);
+      DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
       dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(requireContext(), R.drawable.ic_divider)));
 
       notesList.addItemDecoration(dividerItemDecoration);
@@ -49,11 +51,25 @@ public class NotesListFragment extends Fragment {
 
       notesList.setAdapter(adapter);
 
-      List<Note> notes = Dependencies.NOTES_REPOSITORY.getAll();
 
-      adapter.setData(notes);
+      ProgressBar progressBar = view.findViewById(R.id.progress); //прогресс бар
+      progressBar.setVisibility(View.VISIBLE); //в xml скрыли, тут показали
 
-      adapter.notifyDataSetChanged();
+      //так делает асинхронный метод неблоирующий на запрос заметок
+      Dependencies.NOTES_REPOSITORY.getAll(new CallBack<List<Note>>() {
+         @Override
+         public void onSuccess(List<Note> data) {
+            adapter.setData(data);
+            adapter.notifyDataSetChanged();
+            progressBar.setVisibility(View.GONE); //тут прогресс бар скрыли
+         }
 
+         @Override
+         public void onError(Throwable exception) {
+            progressBar.setVisibility(View.GONE); //тут прогресс бар скрыли в случае ошибки
+
+         }
+      }); //NOTES_REPOSITORY - репозиторий с методом getAll() который возвращает список заметок,
+      //забирает их их из InMemoryNotesRepository
    }
 }
