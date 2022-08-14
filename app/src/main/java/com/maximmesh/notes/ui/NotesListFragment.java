@@ -125,7 +125,7 @@ public class NotesListFragment extends Fragment {
       progressBar.setVisibility(View.VISIBLE); //в xml скрыли, тут показали
 
       //так делает асинхронный метод неблоирующий на запрос заметок
-      Dependencies.NOTES_REPOSITORY.getAll(new CallBack<List<Note>>() {
+      Dependencies.getNotesRepository(requireContext()).getAll(new CallBack<List<Note>>() {
          @Override
          public void onSuccess(List<Note> data) {
             adapter.setData(data);
@@ -157,7 +157,7 @@ public class NotesListFragment extends Fragment {
 
             progressBar.setVisibility(View.VISIBLE);
 
-            Dependencies.NOTES_REPOSITORY.removeNote(selectedNote, new CallBack<Void>() {
+            Dependencies.getNotesRepository(requireContext()).removeNote(selectedNote, new CallBack<Void>() {
                @Override
                public void onSuccess(Void data) {
                   progressBar.setVisibility(View.GONE);
