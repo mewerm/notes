@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.maximmesh.notes.R;
 import com.maximmesh.notes.di.Dependencies;
 import com.maximmesh.notes.domain.CallBack;
@@ -125,7 +123,7 @@ public class NotesListFragment extends Fragment {
       progressBar.setVisibility(View.VISIBLE); //в xml скрыли, тут показали
 
       //так делает асинхронный метод неблоирующий на запрос заметок
-      Dependencies.getNotesRepository(requireContext()).getAll(new CallBack<List<Note>>() {
+      Dependencies.getNotesRepository().getAll(new CallBack<List<Note>>() {
          @Override
          public void onSuccess(List<Note> data) {
             adapter.setData(data);
@@ -157,7 +155,7 @@ public class NotesListFragment extends Fragment {
 
             progressBar.setVisibility(View.VISIBLE);
 
-            Dependencies.getNotesRepository(requireContext()).removeNote(selectedNote, new CallBack<Void>() {
+            Dependencies.getNotesRepository().removeNote(selectedNote, new CallBack<Void>() {
                @Override
                public void onSuccess(Void data) {
                   progressBar.setVisibility(View.GONE);

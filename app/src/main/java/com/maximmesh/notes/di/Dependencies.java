@@ -1,19 +1,13 @@
 package com.maximmesh.notes.di;
 
-import android.content.Context;
+import com.maximmesh.notes.domain.FireStoreNotesRepository;
 import com.maximmesh.notes.domain.NotesRepository;
-import com.maximmesh.notes.domain.SharedPrefNotesRepository;
 
 public class Dependencies { //класс зависимотси
 
-   private static  NotesRepository notesRepository;
+   private static final NotesRepository NOTES_REPOSITORY = new FireStoreNotesRepository();
 
-   public static NotesRepository getNotesRepository(Context context){
-
-      if(notesRepository == null){
-         notesRepository = new SharedPrefNotesRepository(context);
-      }
-
-      return notesRepository;
+   public static NotesRepository getNotesRepository(){
+      return NOTES_REPOSITORY;
    }
 }

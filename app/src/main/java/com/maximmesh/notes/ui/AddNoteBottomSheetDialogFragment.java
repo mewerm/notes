@@ -71,7 +71,7 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
             btnSave.setEnabled(false); //чтобы не мог 10 раз нажимать на кнопку сохранить)
 
             if (finalNoteToEdit != null) {
-               Dependencies.getNotesRepository(requireContext()).updateNote(finalNoteToEdit1, title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
+               Dependencies.getNotesRepository().updateNote(finalNoteToEdit1, title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
                   @Override
                   public void onSuccess(Note data) {
                      Bundle bundle = new Bundle();
@@ -86,7 +86,7 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
                   }
                });
             } else {
-               Dependencies.getNotesRepository(requireContext()).addNote(title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
+               Dependencies.getNotesRepository().addNote(title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
                   @Override
                   public void onSuccess(Note data) {
 
