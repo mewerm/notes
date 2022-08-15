@@ -65,11 +65,11 @@ public class NotesListFragment extends Fragment {
       defaultItemAnimator.setAddDuration(3000L);
       notesList.setItemAnimator(defaultItemAnimator);
 
-      //делаем разделитель Divader
-      DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
-      dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(requireContext(), R.drawable.ic_divider)));
+      //делаем разделитель Divader пока его закоментировал, тк бесит
+     /* DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
+      dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(requireContext(), R.drawable.ic_divider)));*/
       adapter = new NotesAdapter(this);
-      notesList.addItemDecoration(dividerItemDecoration);
+//      notesList.addItemDecoration(dividerItemDecoration);
       adapter.setNoteClicked(new NotesAdapter.OnNoteClicked() {
          @Override
          public void onNoteClicked(Note note) {
@@ -127,7 +127,7 @@ public class NotesListFragment extends Fragment {
          @Override
          public void onSuccess(List<Note> data) {
             adapter.setData(data);
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemChanged(selectedPosition);
             progressBar.setVisibility(View.GONE); //тут прогресс бар скрыли
          }
 

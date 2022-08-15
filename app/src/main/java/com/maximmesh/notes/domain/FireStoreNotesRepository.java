@@ -20,7 +20,7 @@ public class FireStoreNotesRepository implements NotesRepository {
 
    private static final String NOTES = "notes";
 
-   private FirebaseFirestore firestore = FirebaseFirestore.getInstance(); //для работы с фаерстор
+   private final FirebaseFirestore firestore = FirebaseFirestore.getInstance(); //для работы с фаерстор
 
    @Override
    public void getAll(CallBack<List<Note>> callback) {

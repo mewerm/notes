@@ -64,6 +64,7 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
 
       Note finalNoteToEdit = noteToEdit;
       Note finalNoteToEdit1 = noteToEdit;
+
       btnSave.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
@@ -78,6 +79,7 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
                      bundle.putParcelable(ARG_NOTE, data);
                      getParentFragmentManager().setFragmentResult(UPDATE_KEY_RESULT, bundle);
 
+                     dismiss();
                   }
 
                   @Override
