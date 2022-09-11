@@ -2,12 +2,15 @@ package com.maximmesh.notes;
 
 import static com.maximmesh.notes.DescriptionFragment.SELECTED_NOTE;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +29,11 @@ public class NotesFragment extends Fragment {
 
    @Override
    public void onSaveInstanceState(@NonNull Bundle outState) {
+
+      if(note == null){
+         note = Note.getNotes().get(0);
+      }
+
       outState.putParcelable(SELECTED_NOTE, note);
       super.onSaveInstanceState(outState);
    }
@@ -48,7 +56,7 @@ public class NotesFragment extends Fragment {
       super.onViewCreated(view, savedInstanceState);
 
       if (savedInstanceState != null) {
-         note = (Note) savedInstanceState.getParcelable(SELECTED_NOTE);
+         note = (Note)savedInstanceState.getParcelable(SELECTED_NOTE);
       }
 
       dataContainer = view.findViewById(R.id.data_container);
@@ -57,7 +65,6 @@ public class NotesFragment extends Fragment {
       if (isLandscape()) {
          showLandNoteDetails(note);
       }
-
    }
 
    private boolean isLandscape() {
@@ -69,22 +76,48 @@ public class NotesFragment extends Fragment {
       initNotes(dataContainer);
    }
 
-   private void initNotes(View view) {
+   private void initNotes(View view){
       LinearLayout layoutView = (LinearLayout) view;
       layoutView.removeAllViews();
-      for (int i = 0; i < Note.getNotes().length; i++) {
+      for (int i = 0; i < Note.getNotes().size(); i++) {
 
          TextView tv = new TextView(getContext());
-         tv.setText(Note.getNotes()[i].getTitle());
-         tv.setTextSize(25);
-         tv.computeScroll();
+         tv.setText(Note.getNotes().get(i).getTitle());
+         tv.setTextSize(24);
          layoutView.addView(tv);
 
          final int index = i;
+         initPopupMenu(layoutView, tv, index);
          tv.setOnClickListener(v -> {
-            showNoteDetails(Note.getNotes()[index]);
+            showNoteDetails(Note.getNotes().get(index));
          });
       }
+   }
+
+   private void initPopupMenu(LinearLayout rootView, TextView view, int index) {
+      view.setOnLongClickListener(v -> {
+         Activity activity = requireActivity();
+         PopupMenu popupMenu = new PopupMenu(activity, view);
+         activity.getMenuInflater().inflate(R.menu.notes_popup, popupMenu.getMenu());
+
+         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+               switch (menuItem.getItemId()){
+                  case R.id.action_popup_delete:
+                     Note.getNotes().remove(index);
+                     rootView.removeView(view);
+                     break;
+               }
+
+               return true;
+            }
+         });
+         popupMenu.show();
+         return true;
+      });
+
+
    }
 
    private void showNoteDetails(Note note) {

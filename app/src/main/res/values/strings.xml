@@ -1,9 +1,23 @@
 <resources>
-    <string name="app_name">Notes</string>
+    <string name="app_name">Заметки</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_notes">Заметки</string>
     <string name="text_for_text_view_dataPicker">Дата создания заметки: 123.2323.450505 test</string>
     <string name="date_of_create_note">Здесь будет указана дата создания заметки</string>
     <string name="back">Назад к заметкам</string>
+    <string name="about">О программе</string>
+    <string name="exit">Выход</string>
+    <string name="ok">OK</string>
+    <string name="about_program">Используя это приложение, вы делаете огромный вклад в экономику программного костелирования Индии.
+         Это был упорный труд и ждет нас большая дорога через бесконечную вечную Гангу и тернии костылей"</string>
+    <string name="delete">Удалить заметку</string>
+    <string name="delete_popup">Удалить</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="massage_for_GBMTHRFCKR">Надеюсь, мы научимся таки что-то делать нормально</string>
+    <string name="good_luck_mthrfck">Шансы малы, удачи</string>
+    <string name="donate_support">Поддержать проект</string>
+    <string name="buy_meal">Заказать еду</string>
+    <string name="about_author">Об авторе</string>
 </resources>
