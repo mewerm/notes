@@ -5,4 +5,5 @@
     <string name="tv_notes">Заметки</string>
     <string name="text_for_text_view_dataPicker">Дата создания заметки: 123.2323.450505 test</string>
     <string name="date_of_create_note">Здесь будет указана дата создания заметки</string>
+    <string name="back">Назад к заметкам</string>
 </resources>
