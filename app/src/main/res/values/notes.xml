@@ -2,11 +2,18 @@
 <resources>
     <string-array name="notes">
         <item>Заметка SOLID</item>
+        <item>Полезные ссылки</item>
+        <item>Заметка по Layout</item>
+        <item>Clean Architecture</item>
 
     </string-array>
 
     <string-array name="description_notes">
-        <item>@string/SOLID</item>
+        <item>@string/solid_note</item>
+        <item>@string/good_link</item>
+        <item>@string/layout_note</item>
+        <item>@string/clean_arch</item>
+
 
 
 

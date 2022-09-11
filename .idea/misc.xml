@@ -3,10 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/layout-land/activity_main.xml" value="0.16" />
-        <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.1715" />
+        <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/layout-land-v26/fragment_description.xml" value="0.1" />
+        <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/layout-land/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/layout-land/fragment_description.xml" value="0.1" />
+        <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/layout-land/fragment_notes.xml" value="0.2" />
+        <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/layout/fragment_description.xml" value="0.33" />
         <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/layout/fragment_discription.xml" value="0.22" />
-        <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/layout/fragment_notes.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/25-nv/AndroidStudioProjects/StartAndroidHomeWork/Notes/app/src/main/res/layout/fragment_notes.xml" value="0.18" />
       </map>
     </option>
   </component>

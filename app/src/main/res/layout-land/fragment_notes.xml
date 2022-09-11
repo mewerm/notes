@@ -12,7 +12,7 @@
         android:layout_marginTop="@dimen/margin_top_header"
         android:layout_marginBottom="@dimen/margin_bottom_header"
         android:text="@string/tv_notes"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="@color/black"
         android:textSize="@dimen/header_text_size" />
 

@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
 
 
-</FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/add_button"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="300dp"
+                android:layout_marginTop="620dp"
+                android:backgroundTint="@color/white"
+                android:scaleType="center"
+                android:src="@drawable/ic_baseline_add_circle_24" />
+
+
+        </FrameLayout>
+    </FrameLayout>
+</androidx.core.widget.NestedScrollView>

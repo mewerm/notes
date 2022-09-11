@@ -1,10 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="SOLID">
+    <string name="solid_note">
           S: Single Responsibility Principle (Принцип единственной ответственности). - самый главный. Он говорит о том, что у каждого класса, должна быть одна сфера его деятельности - те для каждого класса должно быть не более 1 причины изменять его реализацию.
           O: Open-Closed Principle (Принцип открытости-закрытости).
           L: Liskov Substitution Principle (Принцип подстановки Барбары Лисков).
           I: Interface Segregation Principle (Принцип разделения интерфейса).
           D: Dependency Inversion Principle (Принцип инверсии зависимостей).</string>
+
+    <string name="good_link">https://material.io/develop/android/docs/getting-started</string>
+
+    <string name="layout_note">
+    Все контейнеры объеденины тем, что наследуются от ViewGroup;
+
+        FrameLayout "Один поверх другого" — тип верстки внутри которого может отображаться только один элемент в строке. Т.е. если внутри FrameLayout вы поместите несколько элементов, то следующий будет отображаться поверх предыдущего.
+
+        Например крутилка статуса загрузки когда нужна - будет отображаться поверх остального
+                               include   - переносит всю разметку с одного активити на другой.
+                               include layout ="@layout/frame_example"
+
+        LinearLayout - хорошо для строгого расположения горизонтально и вертикально
+                               Плохой вариант решать более сложные задачи через LinerLayout напр калькулятор:
+
+                               Чтобы создать разметку под калькулятор придется использовать большое количество вложенности LinerLayout , что является дичью тк есть более удачные Лайауты. Все эта вложенность отнимает время от UIThred. И может просто не успеть отображать при большой загруженности. Приложение тупить будет и тормозить. Лишняя вложенность не нужна
+
+                               Есть возможность использовать вес weight - но это делает лэйаут в два раза медленнее
+
+                                GridLayout - "Сетка, решетка"
+
+
+    </string>
+    
+    <string name="clean_arch">
+        Every developer starts from scratch with eager to learn and write fast, many of us lack the idea of writing clean code. At the initial stage, we fight to learn fast and make things look better without knowing their results in the future. I was not exceptional I to had done the same at the initial stage of my career as an Android Developer.
+
+But after spending years on development I understood that getting results by doing something is not a good way of development. It took me years to understand the importance of architecture in development. However, if you are smart it may take less time for you.
+
+Is there a need that we should fallow architecture for an Android App development?
+The answer would be obviously YES because fallowing good architecture helps in many ways like reducing the development time, easy understanding, low maintenance, etc.
+
+Writing clean and quality code for applications requires effort and experience. An application should not only meet the UI and UX requirements but also should be easy to understand, flexible, testable, and maintainable.
+
+Previously there is no much importance of architectures for app development but the scenario has changed drastically. Because as the application grows the complexity also increases. Most of the apps out there are following one or the other architectures.
+
+There are many architectures out there like MVC, MVP, MVVM, MVI, etc extending with clean code. They may sound odd but once you know the inner thing that would be very easy to understand and follow. There are many resources out there explaining about MVC, MVP, MVVM, etc.
+
+Robert C. Martin, also known as Uncle Bob, came up with the Clean Architecture concept in the year 2012. Checkout clean code blog for better understanding. In this article, we will review the concept of Clean Architecture in Android applications and an example.
+
+Why Clean Architecture?
+Separation of Concerns — Separation of code in different modules or sections with specific responsibilities making it easier for maintenance and further modification.
+Loose coupling — flexible code anything can be easily be changed without changing the system
+Easily Testable
+Layers of Clean Architecture
+Clean architecture is also referred to as Onion architecture as it has different layers. As per our requirement, we need to define the layers, however, architecture doesn’t specify the number of layers.
+
+For a basic idea, let us consider there are three layers for now
+        Presentation or APP: A layer that interacts with the UI, mainly Android Stuff like Activities, Fragments, ViewModel, etc. It would include both domain and data layers.
+Domain: Contains the business logic of the application. It is the individual and innermost module. It’s a complete java module.
+Data: It includes the domain layer. It would implement the interface exposed by domain layer and dispenses data to app
+
+
+    </string>
 
 </resources>
