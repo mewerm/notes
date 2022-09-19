@@ -1,5 +1,7 @@
-package com.maximmesh.notes;
+package com.maximmesh.notes.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,11 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.MotionLabel;
 import androidx.fragment.app.Fragment;
+
+import com.maximmesh.notes.Constructor.Note;
+import com.maximmesh.notes.R;
 
 import java.util.Optional;
 
@@ -28,13 +34,6 @@ public class DescriptionFragment extends Fragment {
       // Required empty public constructor
    }
 
-   public static DescriptionFragment newInstance(int index) {
-      DescriptionFragment fragment = new DescriptionFragment();
-      Bundle args = new Bundle();
-      args.putInt(SELECTED_NOTE, index);
-      fragment.setArguments(args);
-      return fragment;
-   }
 
    public static DescriptionFragment newInstance(Note note) {
       DescriptionFragment fragment = new DescriptionFragment();
@@ -44,13 +43,6 @@ public class DescriptionFragment extends Fragment {
       return fragment;
    }
 
-   @Override
-   public void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-
-      setHasOptionsMenu(true);
-
-   }
 
    @Override
    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -59,11 +51,11 @@ public class DescriptionFragment extends Fragment {
       inflater.inflate(R.menu.description_menu, menu);
 
 
-      MenuItem itemAbout = menu.findItem(R.id.action_about); //убираем кнопку выйти из приложения из меню когда в фрагменте описания заметки находимся
       MenuItem itemExit = menu.findItem(R.id.action_exit); //убираем кнопку выйти из приложения из меню когда в фрагменте описания заметки находимся
       if (itemExit != null) {
          itemExit.setVisible(false);
       }
+      MenuItem itemAbout = menu.findItem(R.id.action_about); //убираем кнопку выйти из приложения из меню когда в фрагменте описания заметки находимся
       if (itemAbout != null) {
          itemAbout.setVisible(false);
       }
@@ -73,16 +65,28 @@ public class DescriptionFragment extends Fragment {
    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
       if (item.getItemId() == R.id.action_delete) {
-         //TODO: Удаление заметки.
-         Note.getNotes().remove(note);
-         updateData();
-         if (!isLandScape()) {
-            requireActivity()
-            .getSupportFragmentManager()
-            .popBackStack();
-            return true;
-         }
 
+         new AlertDialog.Builder(getContext())
+         .setTitle("Внимание")
+         .setMessage("Вы действительно желаете удалить заметку?")
+         .setNegativeButton("Нет", null)
+         .setPositiveButton("Да", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+               //TODO: Удаление заметки.
+               Note.getNotes().remove(note);
+               note = null;
+               updateData(true);
+               if (!isLandScape())
+                  requireActivity()
+                  .getSupportFragmentManager()
+                  .popBackStack();
+               Toast.makeText(getActivity(), "Заметка удалена", Toast.LENGTH_SHORT).show();
+            }
+         })
+         .show();
+
+         return true;
       }
       return super.onOptionsItemSelected(item);
    }
@@ -95,9 +99,12 @@ public class DescriptionFragment extends Fragment {
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState) {
-      if (savedInstanceState == null) {
+      if(savedInstanceState == null) {
          setHasOptionsMenu(true);
       }
+
+      if (savedInstanceState != null)
+         requireActivity().getSupportFragmentManager().popBackStack();
       return inflater.inflate(R.layout.fragment_description, container, false);
    }
 
@@ -135,7 +142,7 @@ public class DescriptionFragment extends Fragment {
          @Override
          public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             note.setTitle(tvTitle.getText().toString());
-            updateData();
+            updateData(false);
 
          }
 
@@ -150,13 +157,10 @@ public class DescriptionFragment extends Fragment {
    }
 
 
-
-   private void updateData() {
+   private void updateData(boolean isDelete) {
       NotesFragment notesFragment = (NotesFragment) requireActivity().getSupportFragmentManager().getFragments().stream().filter(fragment -> fragment instanceof NotesFragment)
       .findFirst().get();
-      notesFragment.initNotes();
+      notesFragment.initNotes(isDelete);
 
    }
-
-
 }

@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:backgroundTint="@color/white"
     android:clickable="true"
-    tools:context=".DescriptionFragment">
+    tools:context=".Fragments.DescriptionFragment">
 
     <EditText
         android:id="@+id/tvTitle"

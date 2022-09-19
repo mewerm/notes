@@ -1,6 +1,6 @@
-package com.maximmesh.notes;
+package com.maximmesh.notes.Fragments;
 
-import static com.maximmesh.notes.DescriptionFragment.SELECTED_NOTE;
+import static com.maximmesh.notes.Fragments.DescriptionFragment.SELECTED_NOTE;
 
 import android.app.Activity;
 import android.content.res.Configuration;
@@ -12,12 +12,19 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.maximmesh.notes.Constructor.Note;
+import com.maximmesh.notes.R;
+
 
 public class NotesFragment extends Fragment {
 
@@ -30,13 +37,15 @@ public class NotesFragment extends Fragment {
    @Override
    public void onSaveInstanceState(@NonNull Bundle outState) {
 
-      if(note == null){
+      if (note == null) {
          note = Note.getNotes().get(0);
       }
 
       outState.putParcelable(SELECTED_NOTE, note);
       super.onSaveInstanceState(outState);
    }
+
+
 
    @Override
    public void onCreate(Bundle savedInstanceState) {
@@ -56,15 +65,18 @@ public class NotesFragment extends Fragment {
       super.onViewCreated(view, savedInstanceState);
 
       if (savedInstanceState != null) {
-         note = (Note)savedInstanceState.getParcelable(SELECTED_NOTE);
+         note = (Note) savedInstanceState.getParcelable(SELECTED_NOTE);
       }
 
       dataContainer = view.findViewById(R.id.data_container);
       initNotes(dataContainer);
 
+      addNote(view, Note.getNoteNumbers());
+
       if (isLandscape()) {
          showLandNoteDetails(note);
       }
+
    }
 
    private boolean isLandscape() {
@@ -72,11 +84,29 @@ public class NotesFragment extends Fragment {
       == Configuration.ORIENTATION_LANDSCAPE;
    }
 
-   public void initNotes() {
+   /**
+    * Не понимаю как добавить новый элемент
+    * @param
+    */
+   public void addNote(View view, int index) {
+      FloatingActionButton actionButton = view.findViewById(R.id.btn_add);
+      actionButton.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+
+            Toast.makeText(getActivity(), "Добавляем новую заметку", Toast.LENGTH_LONG).show();
+         }
+      });
+   }
+
+   public void initNotes(boolean isDelete) {
+      if (isDelete) {
+
+      }
       initNotes(dataContainer);
    }
 
-   private void initNotes(View view){
+   private void initNotes(@NonNull View view) {
       LinearLayout layoutView = (LinearLayout) view;
       layoutView.removeAllViews();
       for (int i = 0; i < Note.getNotes().size(); i++) {
@@ -103,10 +133,11 @@ public class NotesFragment extends Fragment {
          popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-               switch (menuItem.getItemId()){
+               switch (menuItem.getItemId()) {
                   case R.id.action_popup_delete:
                      Note.getNotes().remove(index);
                      rootView.removeView(view);
+                     Snackbar.make(rootView, "Заметка удалена", Snackbar.LENGTH_LONG).show();
                      break;
                }
 
@@ -116,8 +147,6 @@ public class NotesFragment extends Fragment {
          popupMenu.show();
          return true;
       });
-
-
    }
 
    private void showNoteDetails(Note note) {
