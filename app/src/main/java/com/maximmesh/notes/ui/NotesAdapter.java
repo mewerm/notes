@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.maximmesh.notes.R;
@@ -19,10 +21,7 @@ import java.util.Locale;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHolder> {
 
-
-   public OnNoteClicked getNoteClicked() {
-      return noteClicked;
-   }
+   private Fragment fragment;
 
    private OnNoteClicked noteClicked;
 
@@ -30,6 +29,10 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
    public SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd,MM,HH:mm", Locale.getDefault()); //паттер формат даты.
 
    private final List<Note> data = new ArrayList<>();
+
+   public NotesAdapter(Fragment fragment) {
+      this.fragment = fragment;
+   }
 
    public void setData(Collection<Note> notes) {
       data.addAll(notes);
@@ -39,8 +42,28 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
       this.noteClicked = noteClicked;
    }
 
+   public OnNoteClicked getNoteClicked() {
+      return noteClicked;
+   }
+
+   public int addNote(Note note) {
+      data.add(note);
+
+      return data.size() -1;
+   }
+
+   public void removeNote(Note selectedNote) {
+      data.remove(selectedNote);
+   }
+
+   public void replaceNote(Note note, int selectedPosition) {
+      data.set(selectedPosition, note);
+   }
+
    interface OnNoteClicked{
       void onNoteClicked(Note note);
+
+      void onNoteLongClicked(Note note, int position);
    }
 
    @NonNull
@@ -79,13 +102,32 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
          message = itemView.findViewById(R.id.message);
          date = itemView.findViewById(R.id.date);
 
-         itemView.findViewById(R.id.card_view).setOnClickListener(new View.OnClickListener() {
+         CardView cardView =  itemView.findViewById(R.id.card_view);
+
+         fragment.registerForContextMenu(cardView);
+
+         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                if(noteClicked != null){
                   int clickedPosition = getAdapterPosition();
                   noteClicked.onNoteClicked(data.get(clickedPosition));
                }
+            }
+         });
+
+         cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+               cardView.showContextMenu(); //показываем контекст меню
+
+               if(noteClicked != null){
+                  int clickedPosition = getAdapterPosition();
+
+                  noteClicked.onNoteLongClicked(data.get(clickedPosition), clickedPosition);
+               }
+
+               return true; //если тру, то будет работать только на лонги, если фолс, то будут пробрасываться и одиночные клики
             }
          });
       }
