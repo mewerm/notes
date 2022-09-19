@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.maximmesh.notes.R;
 import com.maximmesh.notes.di.Dependencies;
 import com.maximmesh.notes.domain.CallBack;
@@ -67,11 +65,11 @@ public class NotesListFragment extends Fragment {
       defaultItemAnimator.setAddDuration(3000L);
       notesList.setItemAnimator(defaultItemAnimator);
 
-      //делаем разделитель Divader
-      DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
-      dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(requireContext(), R.drawable.ic_divider)));
+      //делаем разделитель Divader пока его закоментировал, тк бесит
+     /* DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
+      dividerItemDecoration.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(requireContext(), R.drawable.ic_divider)));*/
       adapter = new NotesAdapter(this);
-      notesList.addItemDecoration(dividerItemDecoration);
+//      notesList.addItemDecoration(dividerItemDecoration);
       adapter.setNoteClicked(new NotesAdapter.OnNoteClicked() {
          @Override
          public void onNoteClicked(Note note) {
@@ -125,11 +123,11 @@ public class NotesListFragment extends Fragment {
       progressBar.setVisibility(View.VISIBLE); //в xml скрыли, тут показали
 
       //так делает асинхронный метод неблоирующий на запрос заметок
-      Dependencies.NOTES_REPOSITORY.getAll(new CallBack<List<Note>>() {
+      Dependencies.getNotesRepository().getAll(new CallBack<List<Note>>() {
          @Override
          public void onSuccess(List<Note> data) {
             adapter.setData(data);
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemChanged(selectedPosition);
             progressBar.setVisibility(View.GONE); //тут прогресс бар скрыли
          }
 
@@ -157,7 +155,7 @@ public class NotesListFragment extends Fragment {
 
             progressBar.setVisibility(View.VISIBLE);
 
-            Dependencies.NOTES_REPOSITORY.removeNote(selectedNote, new CallBack<Void>() {
+            Dependencies.getNotesRepository().removeNote(selectedNote, new CallBack<Void>() {
                @Override
                public void onSuccess(Void data) {
                   progressBar.setVisibility(View.GONE);

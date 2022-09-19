@@ -1,9 +1,13 @@
 package com.maximmesh.notes.di;
 
-import com.maximmesh.notes.domain.InMemoryNotesRepository;
+import com.maximmesh.notes.domain.FireStoreNotesRepository;
 import com.maximmesh.notes.domain.NotesRepository;
 
-public class Dependencies {
+public class Dependencies { //класс зависимотси
 
-   public static final NotesRepository NOTES_REPOSITORY = new InMemoryNotesRepository();
+   private static final NotesRepository NOTES_REPOSITORY = new FireStoreNotesRepository();
+
+   public static NotesRepository getNotesRepository(){
+      return NOTES_REPOSITORY;
+   }
 }

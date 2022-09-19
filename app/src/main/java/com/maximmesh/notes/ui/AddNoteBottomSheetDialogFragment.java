@@ -64,6 +64,7 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
 
       Note finalNoteToEdit = noteToEdit;
       Note finalNoteToEdit1 = noteToEdit;
+
       btnSave.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
@@ -71,13 +72,14 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
             btnSave.setEnabled(false); //чтобы не мог 10 раз нажимать на кнопку сохранить)
 
             if (finalNoteToEdit != null) {
-               Dependencies.NOTES_REPOSITORY.updateNote(finalNoteToEdit1, title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
+               Dependencies.getNotesRepository().updateNote(finalNoteToEdit1, title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
                   @Override
                   public void onSuccess(Note data) {
                      Bundle bundle = new Bundle();
                      bundle.putParcelable(ARG_NOTE, data);
                      getParentFragmentManager().setFragmentResult(UPDATE_KEY_RESULT, bundle);
 
+                     dismiss();
                   }
 
                   @Override
@@ -86,7 +88,7 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
                   }
                });
             } else {
-               Dependencies.NOTES_REPOSITORY.addNote(title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
+               Dependencies.getNotesRepository().addNote(title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
                   @Override
                   public void onSuccess(Note data) {
 

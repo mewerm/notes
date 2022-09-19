@@ -1,4 +1,4 @@
-package com.maximmesh.notes;
+package com.maximmesh.notes.ui;
 
 
 import android.os.Bundle;
@@ -6,11 +6,12 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentResultListener;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.maximmesh.notes.ui.InfoFragment;
-import com.maximmesh.notes.ui.NotesListFragment;
+import com.maximmesh.notes.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,11 +20,19 @@ public class MainActivity extends AppCompatActivity {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_main);
 
-      if(savedInstanceState == null){
-         getSupportFragmentManager()
-         .beginTransaction()
-         .replace(R.id.container, new NotesListFragment())
-         .commit();
+      getSupportFragmentManager().setFragmentResultListener(AuthFragment.KEY_RESULT_AUTHORIZED, this, new FragmentResultListener() {
+         @Override
+         public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+            showNotes();
+         }
+      });
+
+      if (savedInstanceState == null) {
+         if( isAuthorized()){
+            showNotes();
+         }else{
+            showAuth();
+         }
       }
 
       BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navi);
@@ -33,10 +42,12 @@ public class MainActivity extends AppCompatActivity {
          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                case R.id.action_notes:
-                  getSupportFragmentManager()
-                  .beginTransaction()
-                  .replace(R.id.container, new NotesListFragment())
-                  .commit();
+
+                  if( isAuthorized()){
+                     showNotes();
+                  }else{
+                     showAuth();
+                  }
                   return true;
 
                case R.id.action_info:
@@ -52,4 +63,21 @@ public class MainActivity extends AppCompatActivity {
 
    }
 
+   private void showNotes() {
+      getSupportFragmentManager()
+      .beginTransaction()
+      .replace(R.id.container, new NotesListFragment())
+      .commit();
+   }
+
+   private void showAuth() {
+      getSupportFragmentManager()
+      .beginTransaction()
+      .replace(R.id.container, new AuthFragment())
+      .commit();
+   }
+
+   private boolean isAuthorized(){
+      return GoogleSignIn.getLastSignedInAccount(this) != null ;
+   }
 }
