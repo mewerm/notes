@@ -8,11 +8,11 @@ import java.util.Objects;
 
 public class Note implements Parcelable {
 
-   private String id;
+   private final String id;
 
-   private String title;
+   private final String title;
 
-   private String message;
+   private final String message;
 
    private Date cratedAt;
 

@@ -46,9 +46,7 @@ public class FireStoreNotesRepository implements NotesRepository {
                result.add(new Note(id, title, message, createdAt));
 
             }
-
             callback.onSuccess(result);
-
          }
       });
    }

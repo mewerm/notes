@@ -6,7 +6,6 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentResultListener;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -20,17 +19,12 @@ public class MainActivity extends AppCompatActivity {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_main);
 
-      getSupportFragmentManager().setFragmentResultListener(AuthFragment.KEY_RESULT_AUTHORIZED, this, new FragmentResultListener() {
-         @Override
-         public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-            showNotes();
-         }
-      });
+      getSupportFragmentManager().setFragmentResultListener(AuthFragment.KEY_RESULT_AUTHORIZED, this, (requestKey, result) -> showNotes());
 
       if (savedInstanceState == null) {
          if( isAuthorized()){
             showNotes();
-         }else{
+         }else {
             showAuth();
          }
       }

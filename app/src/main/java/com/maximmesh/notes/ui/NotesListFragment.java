@@ -10,11 +10,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +22,6 @@ import com.maximmesh.notes.domain.CallBack;
 import com.maximmesh.notes.domain.Note;
 
 import java.util.List;
-import java.util.Objects;
 
 public class NotesListFragment extends Fragment {
 
