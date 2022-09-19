@@ -1,6 +1,17 @@
 <resources>
-    <string name="app_name">Notes</string>
+    <string name="app_name">Мои Заметки</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tv_notes">Заметки</string>
+    <string name="action_notes">Заметки</string>
+    <string name="action_info">Информация</string>
+    <string name="notes_list">Заметки</string>
+    <string name="info">info</string>
+    <string name="notes_info">Информация</string>
+    <string name="about_program">Приложение наконец-то встало на нужные рельсы.</string>
+    <string name="ok">Sehr Gut</string>
+    <string name="message">Заметка</string>
+    <string name="title">Заголовок</string>
+    <string name="save">Сохранить</string>
+    <string name="action_edit">Редактировать</string>
+    <string name="action_delete">Удалить</string>
 </resources>

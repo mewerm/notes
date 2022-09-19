@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="header_text_size">27sp</dimen>
+    <dimen name="header_text_size">20sp</dimen>
+    <dimen name="margin_top_header">16dp</dimen>
+    <dimen name="margin_bottom_header">16dp</dimen>
+    <dimen name="standart_margin">16dp</dimen>
 </resources>
