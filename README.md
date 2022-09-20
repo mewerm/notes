@@ -1,7 +1,13 @@
 # NotesGBHW
 - Проект "Заметки" в рамках домашней работы для GeekBrains
 
-- This app work with Cloud Firestore.
+- Java
+- This app work with Cloud Firestore (also can work with: InMemoryPhone and SharedPreferences)
+- Single Activity with Fragments
+- Use BottomSheetDialogFragment
+- Use RecyclerView
+
+## How it work:
 
 > Start Screen
 
