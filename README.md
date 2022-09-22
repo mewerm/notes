@@ -7,7 +7,7 @@
 - Use BottomSheetDialogFragment
 - Use RecyclerView
 
-## How it work:
+## How it is work:
 
 > - Start Screen
 > 
