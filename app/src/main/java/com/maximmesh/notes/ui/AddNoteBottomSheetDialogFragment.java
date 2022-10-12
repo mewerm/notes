@@ -70,6 +70,7 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
          public void onClick(View v) {
 
             btnSave.setEnabled(false); //чтобы не мог 10 раз нажимать на кнопку сохранить)
+           // dismiss(); //закрываем шторку, был баг, что при нажатии кнопки "save" шторка не закрывалась
 
             if (finalNoteToEdit != null) {
                Dependencies.getNotesRepository().updateNote(finalNoteToEdit1, title.getText().toString(), message.getText().toString(), new CallBack<Note>() {
@@ -100,13 +101,11 @@ public class AddNoteBottomSheetDialogFragment extends BottomSheetDialogFragment 
                      btnSave.setEnabled(true); //разрешаем тапать по кнопке сохранить
                      dismiss(); //закрываем шторку
                   }
-
                   @Override
                   public void onError(Throwable exception) {
                      btnSave.setEnabled(false); //запрещаем
                   }
                });
-
             }
          }
       });
